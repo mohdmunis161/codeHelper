@@ -1,4 +1,7 @@
-int _max=3000;
+#include<bits/stdc++.h>
+using namespace std;
+
+const int _max=1000000;
 vector<int> primeFac(_max+1, -1);
 
 void sieve() {
@@ -12,20 +15,33 @@ void sieve() {
         }
 }
 
-int primeFacCount(int n) {
-        if(n==0||n==1) return 0;
-        int pfCount=0;
+int countDivs(int n) {
+        if(n==1) return 1;
+        int count=1; 
         while(n>1) {
                 if(primeFac[n]!=-1) {
-                        pfCount++;
                         int pf=primeFac[n];
-                        while(n%pf==0) n/=pf;
+                        int p=0;
+                        while(n%pf==0) {
+                                p++;
+                                n/=pf;
+                        }
+                        count=count*(p+1);
                 } else {
-                        pfCount++;
                         n=1;
+                        count=count*(1+1);
                 }
         }
-
-        return pfCount;
+        return count;
+}
+int main() {
+        sieve();
+        int n;
+        cin>>n;
+        while(n--) {
+                int x;
+                cin>>x;
+                cout<<countDivs(x)<<endl;
+        }
 }
 
